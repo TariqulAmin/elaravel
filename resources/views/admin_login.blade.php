@@ -53,7 +53,7 @@
 					
 					<h2>Login to your account</h2>
 					
-					<form class="form-horizontal" action="{{action('AdminController@dashboard')}}" method="post">
+					<form class="form-horizontal" action="{{action('AdminController@login')}}" method="post">
 						
 						@csrf
 						<fieldset>

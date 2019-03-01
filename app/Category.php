@@ -12,4 +12,11 @@ class Category extends Model
      'publication_status',
 
     ];
+
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
+
+
 }

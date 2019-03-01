@@ -226,7 +226,7 @@
 
 							<div class="panel panel-default">
 									<div class="panel-heading">
-										<h4 class="panel-title"><a href="#">{{$category->category_name}}</a></h4>
+									<h4 class="panel-title"><a href="{{ url('product_by_category',$category->id) }}">{{$category->category_name}}</a></h4>
 									</div>
 								</div>
 									
@@ -248,7 +248,7 @@
 
 									@foreach ($brands as $brand)
 
-									<li><a href="#"> <span class="pull-right">(50)</span>{{$brand->brand_name}}</a></li>
+									<li><a href="{{ url('product_by_brand',$brand->id) }}"> <span class="pull-right">(50)</span>{{$brand->brand_name}}</a></li>
 											
 									@endforeach
 									

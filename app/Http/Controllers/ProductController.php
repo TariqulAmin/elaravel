@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
+use App\Brand;
+use App\Product;
 
 class ProductController extends Controller
 {
@@ -12,8 +15,10 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        //
+        $products=Product::all();
+        return view('admin.product.all_product',compact('products'));
     }
 
     /**
@@ -23,7 +28,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories=Category::where('publication_status',1)->get();
+        $brands=Brand::where('publication_status',1)->get();
+
+        return view('admin.product.add_product',compact('categories','brands'));
+        
     }
 
     /**
@@ -34,7 +43,25 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Product::create($request->all());
+        //  return $request->file('product_image');
+
+        $input=$request->all();
+
+        if($file=$request->file('product_image')){
+
+           $name=time().$file->getClientOriginalName();
+           $file->move('images',$name);
+           $input['product_image']=$name;
+
+        }
+
+        Product::create($input);
+        $request->session()->flash('message', 'Product Added Successfully');
+        return redirect('/product/create');
+
+
+
     }
 
     /**
@@ -77,8 +104,37 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $product=Product::find($id);
+
+        $product->delete();
+
+        $request->session()->flash('message', 'Product Deleted Sucessfully');
+
+        return redirect('/product');
     }
+
+    public function active(Request $request ,$id){
+
+        $product=product::find($id);
+   
+        $product->update(['publication_status'=>0]);
+   
+        $request->session()->flash('message', 'product Made Inactive Successfully');
+   
+        return redirect('/product');
+   
+       }
+   
+       public function inactive( Request $request ,$id){
+   
+           $product=Product::find($id);
+           $product->update(['publication_status'=>1]);
+   
+           $request->session()->flash('message', 'Product Made Active Successfully');
+      
+           return redirect('/product');
+      
+          }
 }

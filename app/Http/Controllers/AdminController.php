@@ -10,20 +10,15 @@ class AdminController extends Controller
 {
     
 
-   public function index(){
+   public function login_page(){
 
+
+     session()->forget(['admin_id','admin_name']);
      return view('admin_login');
 
    }
 
-   public function show_dashboard(){
-   
-    return view('admin.dashboard');
-
-   }
-
-
-   public function dashboard(AdminLoginRequest $request){
+   public function login(AdminLoginRequest $request){
     
      
     $email= $request->admin_email;
@@ -50,5 +45,23 @@ class AdminController extends Controller
     
 
    }
+
+   public function show_dashboard(){
+   
+    return view('admin.dashboard');
+
+   }
+
+
+
+
+                public function logout(){
+
+                session()->forget(['admin_id','admin_name']);
+
+                return redirect('/admin');
+
+
+              }
 
 }

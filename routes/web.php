@@ -17,35 +17,56 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/','HomeController@index');
 
+Route::get('/product_by_category/{id}','HomeController@show_product_by_category');
+
+Route::get('/product_by_brand/{id}','HomeController@show_product_by_brand');
 
 
 
 
 //Backend Route 
 
-Route::get('/logout','SuperAdminController@logout');
 
-Route::get('/admin','AdminController@index');
 
-Route::get('/dashboard','AdminController@show_dashboard');
-
-Route::post('/admin-dashboard','AdminController@dashboard');
+Route::get('/admin','AdminController@login_page');
+Route::post('/login','AdminController@login');
+Route::get('/dashboard','AdminController@show_dashboard')->middleware('adminauthcheck');
+Route::get('/logout','AdminController@logout');
 
 //Category Route............
 
-Route::get('/category/active/{id}','CategoryController@active');
-Route::get('/category/inactive/{id}','CategoryController@inactive');
-Route::resource('/category', 'CategoryController');
+Route::group(['middleware' => 'adminauthcheck'], function () {
+
+  Route::get('/category/active/{id}','CategoryController@active');
+  Route::get('/category/inactive/{id}','CategoryController@inactive');
+  Route::resource('/category', 'CategoryController');
+    
+});
+
+
 
 //Brand Route............
 
+Route::group(['middleware' => 'adminauthcheck'], function () {
 
-Route::get('/brand/active/{id}','BrandController@active');
-Route::get('/brand/inactive/{id}','BrandController@inactive');
-Route::resource('/brand', 'BrandController');
+  Route::get('/brand/active/{id}','BrandController@active');
+  Route::get('/brand/inactive/{id}','BrandController@inactive');
+  Route::resource('/brand', 'BrandController');
+    
+});
+
+
+
 
 //Product Route......
 
-Route::resource('/product', 'ProductController');
+Route::group(['middleware' => 'adminauthcheck'], function () {
+  
+  Route::resource('/product', 'ProductController');
+  Route::get('/product/active/{id}','ProductController@active');
+  Route::get('/product/inactive/{id}','ProductController@inactive');
+    
+});
+
 
 

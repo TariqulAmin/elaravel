@@ -12,4 +12,10 @@ class Brand extends Model
         'brand_status',
    
        ];
+    
+       public function products(){
+
+       return $this->hasMany('App\Product');
+
+    }
 }
