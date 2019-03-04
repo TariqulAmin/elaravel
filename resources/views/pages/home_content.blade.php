@@ -22,14 +22,14 @@
 							<div class="overlay-content">
 								<h2>{{$product->product_price}} TK.</h2>
 								<p>{{$product->product_name}}</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+								<a href="{{ url('/view-product',$product->id) }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 							</div>
 						</div>
 				</div>
 				<div class="choose">
 					<ul class="nav nav-pills nav-justified">
 						<li><a href="#"><i class="fa fa-plus-square"></i>{{$product->brand->brand_name}}</a></li>
-						<li><a href="#"><i class="fa fa-plus-square"></i>View Product</a></li>
+					  <li><a href=" {{ url('/view-product',$product->id) }}  "><i class="fa fa-plus-square"></i>View Product</a></li>
 					</ul>
 				</div>
 			</div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Brand;
 use App\Product;
+use App\Http\Requests\AddProductRequest;
 
 class ProductController extends Controller
 {
@@ -41,7 +42,7 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddProductRequest $request)
     {
         // Product::create($request->all());
         //  return $request->file('product_image');
@@ -83,7 +84,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product=Product::find($id);
+        $categories=Category::where('publication_status',1)->get();
+        $brands=Brand::where('publication_status',1)->get();
+        return view('admin.product.edit_product',compact('product','categories','brands'));
     }
 
     /**
@@ -95,7 +99,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product=Product::find($id);
+
+        $input=$request->all();
+
+        if($file=$request->file('product_image')){
+
+           $name=time().$file->getClientOriginalName();
+           $file->move('images',$name);
+           $input['product_image']=$name;
+
+        }
+
+        $product->update($input);
+        $request->session()->flash('message', 'Product Updated Successfully');
+        return redirect('/product');
     }
 
     /**

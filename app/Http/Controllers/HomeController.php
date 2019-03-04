@@ -39,6 +39,15 @@ class HomeController extends Controller
         
     
         
-          return view('pages/product_by_brand',compact('products'));
+          return view('pages.product_by_brand',compact('products'));
+    }
+
+    public function product_detail($id){
+
+      $product=Product::find($id);
+
+      return view('pages.product_detail',compact('product'));
+
+
     }
 }

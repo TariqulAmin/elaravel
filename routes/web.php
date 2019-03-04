@@ -16,11 +16,13 @@ use App\Http\Controllers\HomeController;
 //Frontend Route
 
 Route::get('/','HomeController@index');
-
 Route::get('/product_by_category/{id}','HomeController@show_product_by_category');
-
 Route::get('/product_by_brand/{id}','HomeController@show_product_by_brand');
+Route::get('/view-product/{id}','HomeController@product_detail');
 
+//Cart Route
+
+Route::post('/add-to-cart', 'CartController@add_to_cart');
 
 
 
