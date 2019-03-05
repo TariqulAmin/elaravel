@@ -23,6 +23,10 @@ Route::get('/view-product/{id}','HomeController@product_detail');
 //Cart Route
 
 Route::post('/add-to-cart', 'CartController@add_to_cart');
+Route::get('/show-cart', 'CartController@show_cart');
+Route::get('/delete-item/{id}', 'CartController@delete_from_cart');
+Route::patch('/update-item/{id}', 'CartController@update_item');
+
 
 
 
