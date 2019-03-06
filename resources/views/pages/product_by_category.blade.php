@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layout_minus_slider')
 
 @section('content')
 

@@ -27,6 +27,20 @@ Route::get('/show-cart', 'CartController@show_cart');
 Route::get('/delete-item/{id}', 'CartController@delete_from_cart');
 Route::patch('/update-item/{id}', 'CartController@update_item');
 
+//Checkout
+
+Route::get('/customer_login', 'CheckoutController@login');
+Route::post('/customer-registration', 'CheckoutController@customer_registration');
+Route::post('/customer_login_system', 'CheckoutController@customer_login');
+Route::get('/checkout', 'CheckoutController@checkout');
+Route::get('/customer_logut', 'CheckoutController@logout');
+Route::post('/shipping-details', 'CheckoutController@shipping_details');
+
+
+
+
+
+
 
 
 
