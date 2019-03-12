@@ -15,4 +15,9 @@ class Shipping extends Model
         'shipping_mobile_number'
 
     ];
+
+    public function order()
+    {
+        return $this->hasOne('App\Order');
+    }
 }

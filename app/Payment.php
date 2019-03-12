@@ -12,4 +12,9 @@ class Payment extends Model
      'payment_status'
 
     ];
+
+    public function order()
+    {
+        return $this->hasOne('App\Order');
+    }
 }

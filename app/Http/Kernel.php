@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'customercheck'=>  \App\Http\Middleware\CustomerCheck::class,
         'shippingcheck'=>  \App\Http\Middleware\ShippingCheck::class,
         'paymentcheck'=>  \App\Http\Middleware\PaymentCheck::class,
+        'paymentmethod'=>  \App\Http\Middleware\PaymentMethod::class,
         
     ];
 

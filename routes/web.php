@@ -33,35 +33,36 @@ Route::patch('/update-item/{id}', 'CartController@update_item');
 //Checkout
 
 Route::get('/customer_login', 'CheckoutController@login')->middleware('customercheck');
-
 Route::post('/customer-registration', 'CheckoutController@customer_registration');
 Route::post('/customer_login_system', 'CheckoutController@customer_login');
-
 Route::get('/checkout', 'CheckoutController@checkout')->middleware('shippingcheck');
-
 Route::get('/customer_logut', 'CheckoutController@logout');
 Route::post('/shipping-details', 'CheckoutController@shipping_details');
-
 Route::get('/payment', 'CheckoutController@payment')->middleware('paymentcheck');
-
 Route::post('/place-order', 'CheckoutController@place_order');
-
 Route::get('/confirm-handcash',function(){
 
   return view('pages.confirm-handcash');
 
 });
 
-Route::get('/payment-stripe', 'CheckoutController@payment_stripe');
+Route::group(['middleware' => 'paymentmethod'], function () {
 
+   Route::get('/payment-stripe', 'CheckoutController@payment_stripe');
+   Route::post('/stripe-submission', 'CheckoutController@stripe_submission');
 
-Route::post('/stripe-submission', 'CheckoutController@stripe_submission');
+});
 
 Route::get('/confirm-stripe',function(){
 
   return view('pages.confirm-stripe');
 
 });
+
+
+
+
+
 
 
 
@@ -110,6 +111,16 @@ Route::group(['middleware' => 'adminauthcheck'], function () {
   Route::get('/product/inactive/{id}','ProductController@inactive');
     
 });
+
+//Order manage
+
+Route::group(['middleware' => 'adminauthcheck'], function () {
+  
+  Route::resource('/manage-order', 'OrderController'); 
+
+    
+});
+
 
 
 

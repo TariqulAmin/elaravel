@@ -15,4 +15,9 @@ class OrderDetail extends Model
         'product_quantity'
                 
     ];
+
+    public function order()
+    {
+        return $this->belongsTo('App\Order');
+    }
 }

@@ -136,6 +136,9 @@ class CheckoutController extends Controller
         if($payment->payment_method == 'handcash'){
 
             Cart::destroy();
+            $request->session()->forget('shipping_id','payment_id');
+            $request->session()->flash('success', "Thank you for Order. We will contact soon.");
+
             return redirect('/confirm-handcash');
             
 
@@ -171,6 +174,8 @@ class CheckoutController extends Controller
 
         $request->session()->flash('success', "Payment Successful");
         Cart::destroy();
+        $request->session()->forget(['shipping_id','payment_id']);
+
       return redirect('/confirm-stripe');
         
        

@@ -364,7 +364,7 @@
 							</ul>	
 						</li>
 
-						<li><a href="messages.html"><i class="icon-envelope"></i><span class="hidden-tablet"> Slider</span></a></li>
+						<li><a href="{{route('manage-order.index')}}"><i class="icon-folder-close-alt"></i><span class="hidden-tablet"> Manage Order</span></a></li>
 						<li><a href="tasks.html"><i class="icon-tasks"></i><span class="hidden-tablet"> Social Link</span></a></li>
 						<li><a href="ui.html"><i class="icon-eye-open"></i><span class="hidden-tablet"> Shop Name</span></a></li>
 						<li><a href="widgets.html"><i class="icon-dashboard"></i><span class="hidden-tablet"> Delivary Man</span></a></li>
