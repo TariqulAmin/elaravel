@@ -19,6 +19,9 @@ Route::get('/','HomeController@index');
 Route::get('/product_by_category/{id}','HomeController@show_product_by_category');
 Route::get('/product_by_brand/{id}','HomeController@show_product_by_brand');
 Route::get('/view-product/{id}','HomeController@product_detail');
+Route::get('/search','HomeController@search');
+
+
 
 //Cart Route
 
@@ -29,16 +32,36 @@ Route::patch('/update-item/{id}', 'CartController@update_item');
 
 //Checkout
 
-Route::get('/customer_login', 'CheckoutController@login');
+Route::get('/customer_login', 'CheckoutController@login')->middleware('customercheck');
+
 Route::post('/customer-registration', 'CheckoutController@customer_registration');
 Route::post('/customer_login_system', 'CheckoutController@customer_login');
-Route::get('/checkout', 'CheckoutController@checkout');
+
+Route::get('/checkout', 'CheckoutController@checkout')->middleware('shippingcheck');
+
 Route::get('/customer_logut', 'CheckoutController@logout');
 Route::post('/shipping-details', 'CheckoutController@shipping_details');
 
+Route::get('/payment', 'CheckoutController@payment')->middleware('paymentcheck');
+
+Route::post('/place-order', 'CheckoutController@place_order');
+
+Route::get('/confirm-handcash',function(){
+
+  return view('pages.confirm-handcash');
+
+});
+
+Route::get('/payment-stripe', 'CheckoutController@payment_stripe');
 
 
+Route::post('/stripe-submission', 'CheckoutController@stripe_submission');
 
+Route::get('/confirm-stripe',function(){
+
+  return view('pages.confirm-stripe');
+
+});
 
 
 

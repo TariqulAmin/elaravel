@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     public function index(){
 
-       $products=Product::where('publication_status',1)->limit(9)->get();
+       $products=Product::where('publication_status',1)->paginate(6)->onEachSide(1);
         return view('pages.home_content',compact('products'));
 
     }
@@ -22,7 +22,7 @@ class HomeController extends Controller
 
         $category=Category::find($id);
 
-        $products=$category->products()->where('publication_status',1)->limit(18)->get();
+        $products=$category->products()->where('publication_status',1)->paginate(6)->onEachSide(1);
 
         
     
@@ -34,7 +34,7 @@ class HomeController extends Controller
 
          $brand=Brand::find($id);
 
-         $products=$brand->products()->where('publication_status',1)->limit(18)->get();
+         $products=$brand->products()->where('publication_status',1)->paginate(6)->onEachSide(1);
 
         
     
@@ -47,6 +47,28 @@ class HomeController extends Controller
       $product=Product::find($id);
 
       return view('pages.product_detail',compact('product'));
+
+
+    }
+
+    public function search(Request $request){
+
+      $request->validate([
+         
+        'query'=>'required '
+
+      ]);
+
+     $query=$request->input('query');
+
+     $products=Product::where('publication_status',1)
+                      ->where('product_name','like',"%$query%")
+                      ->orWhere('product_short_description','like',"%$query%")
+                      ->paginate(6)->onEachSide(1);
+
+     
+      
+      return view('pages.search',compact('query','products'));
 
 
     }

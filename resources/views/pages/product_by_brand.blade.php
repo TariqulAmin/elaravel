@@ -1,6 +1,15 @@
-@extends('layout_minus_slider')
+@extends('layout')
+
+@section('side-navigation')
+	
+   @include('side-navigation')
+
+@endsection
+
 
 @section('content')
+
+<div class="col-sm-9 padding-right">
 
 <div class="features_items"><!--features_items-->
 
@@ -41,6 +50,21 @@
 
 	
 </div><!--features_items-->
+
+<div class="row">
+		 
+	  <div class="col-sm-5">
+
+			 <p class="text-muted" style="">Item {{ $products->firstItem()}} to {{ $products->lastItem() }} of {{ $products->total()}} total</p>	
+		</div>
+
+		<div class="col-sm-6">
+
+				{{ $products->render() }}
+		 
+		 </div> 
+
+</div>
 
 
 
@@ -140,6 +164,8 @@
 			</a>			
 	</div>
 </div><!--/recommended_items-->
+
+</div>
 		
 @endsection
 

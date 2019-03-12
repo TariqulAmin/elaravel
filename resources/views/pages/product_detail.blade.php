@@ -1,4 +1,10 @@
-@extends('layout_minus_slider')
+@extends('layout')
+
+@section('side-navigation')
+	
+   @include('side-navigation')
+
+@endsection
 
 @section('content')
 

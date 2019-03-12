@@ -11,8 +11,8 @@
     <link href="{{asset('front-end/css/prettyPhoto.css')}}" rel="stylesheet">
     <link href="{{asset('front-end/css/price-range.css')}}" rel="stylesheet">
     <link href="{{asset('front-end/css/animate.css')}}" rel="stylesheet">
-	<link href="{{asset('front-end/css/main.css')}}" rel="stylesheet">
-	<link href="{{asset('front-end/css/responsive.css')}}" rel="stylesheet">
+    <link href="{{asset('front-end/css/main.css')}}" rel="stylesheet">
+	  <link href="{{asset('front-end/css/responsive.css')}}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -22,7 +22,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{URL::to('front-end/images/ico/apple-touch-icon-114-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{URL::to('front-end/images/ico/apple-touch-icon-72-precomposed.png')}}">
     <link rel="apple-touch-icon-precomposed" href="{{URL::to('front-end/images/ico/apple-touch-icon-57-precomposed.png')}}">
-</head><!--/head-->
+     @yield('styles')
+	</head><!--/head-->
 
 <body>
 	<header id="header"><!--header-->
@@ -32,8 +33,27 @@
 					<div class="col-sm-6">
 						<div class="contactinfo">
 							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
+
+								@php
+										 
+										 $customer_id=session('customer_id');
+
+										 $customer=App\Customer::find($customer_id);
+										 
+										 
+
+								@endphp
+
+								@if ($customer_id)
+
+								<li><a href="#">Hi, <span style="color:blue">{{$customer->first_name}}</span></a></li>
+								
+
+
+                 
+							  @endif
+								
+								
 							</ul>
 						</div>
 					</div>
@@ -55,50 +75,47 @@
 		<div class="header-middle"><!--header-middle-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-4">
-						<div class="logo pull-left">
-							<a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+					<div class="col-sm-3 pull-left">
+						<div class="logo">
+							<a href="/"><img src="{{asset('front-end/images/home/logo.png')}}" alt="" /></a>
 						</div>
-						<div class="btn-group pull-right">
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									USA
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">Canada</a></li>
-									<li><a href="#">UK</a></li>
-								</ul>
-							</div>
-							
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									DOLLAR
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">Canadian Dollar</a></li>
-									<li><a href="#">Pound</a></li>
-								</ul>
-							</div>
-						</div>
+					
 					</div>
-					<div class="col-sm-8">
+{{-- 				
+					<div class="col-sm-5">
+
+							<div class="">
+									<div class="search_box">
+										<input type="text" placeholder="Search"/>
+									</div>
+								</div>
+
+					</div> --}}
+
+					
+					<div class="col-sm-4 pull-right">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+								
+								
 								
 								@php
 								$customer_id=session('customer_id');
+								$shipping_id=session('shipping_id');
 								@endphp
+
 								
 								@if (!$customer_id)
 
 								<li><a href="{{url('/customer_login')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 							 
-								@else
+								@elseif($shipping_id)
 								
+								<li><a href="{{url('/payment')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+
+								
+								@elseif($customer_id)
+
 								<li><a href="{{url('/checkout')}}"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 
 
@@ -123,7 +140,7 @@
 		<div class="header-bottom"><!--header-bottom-->
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-9">
+					<div class="col-sm-7">
 						<div class="navbar-header">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 								<span class="sr-only">Toggle navigation</span>
@@ -137,8 +154,7 @@
 								<li><a href="/" class="active">Home</a></li>
 								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
+                 
 										<li><a href="{{url('/customer_login')}}">Checkout</a></li> 
 										<li><a href="cart.html">Cart</a></li> 
 									
@@ -155,154 +171,37 @@
 							</ul>
 						</div>
 					</div>
-					<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
-						</div>
+					<div class="col-sm-5">
+							<form  method="GET" action="/search" class="form-inline ">
+									<div class="active-cyan-3 active-cyan-4 mb-4">
+											
+											<input class="form-control" type="text" placeholder="Search Product Here" name="query">
+									
+									</div>
+
+									
+							</form>
 					</div>
 				</div>
 			</div>
 		</div><!--/header-bottom-->
 	</header><!--/header-->
 	
-	<section id="slider"><!--slider-->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12">
-					<div id="slider-carousel" class="carousel slide" data-ride="carousel">
-						<ol class="carousel-indicators">
-							<li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#slider-carousel" data-slide-to="1"></li>
-							<li data-target="#slider-carousel" data-slide-to="2"></li>
-						</ol>
-						
-						<div class="carousel-inner">
-							<div class="item active">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free E-Commerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{asset('front-end/images/home/girl1.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{asset('front-end/images/home/pricing.png')}}"  class="pricing" alt="" />
-								</div>
-							</div>
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>100% Responsive Design</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{asset('front-end/images/home/girl2.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{asset('front-end/images/home/pricing.png')}}"  class="pricing" alt="" />
-								</div>
-							</div>
-							
-							<div class="item">
-								<div class="col-sm-6">
-									<h1><span>E</span>-SHOPPER</h1>
-									<h2>Free Ecommerce Template</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-									<button type="button" class="btn btn-default get">Get it now</button>
-								</div>
-								<div class="col-sm-6">
-									<img src="{{asset('front-end/images/home/girl3.jpg')}}" class="girl img-responsive" alt="" />
-									<img src="{{asset('front-end/images/home/pricing.png')}}" class="pricing" alt="" />
-								</div>
-							</div>
-							
-						</div>
-						
-						<a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-							<i class="fa fa-angle-left"></i>
-						</a>
-						<a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-							<i class="fa fa-angle-right"></i>
-						</a>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</section><!--/slider-->
+	@yield('slider')
 	
 	<section>
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-3">
-					<div class="left-sidebar">
-						<h2>Category</h2>
-						<div class="panel-group category-products" id="accordian"><!--category-productsr-->
-							
-							@php
-							
-							   $categories=App\Category::where('publication_status',1)->get();
-
-							@endphp
-
-							@foreach ($categories as $category)
-
-							<div class="panel panel-default">
-									<div class="panel-heading">
-									<h4 class="panel-title"><a href="{{ url('product_by_category',$category->id) }}">{{$category->category_name}}</a></h4>
-									</div>
-								</div>
-									
-							@endforeach
-							
-						
-
-
-						</div><!--/category-products-->
-					
-						<div class="brands_products"><!--brands_products-->
-							<h2>Brands</h2>
-							<div class="brands-name">
-								<ul class="nav nav-pills nav-stacked">
-
-									@php
-											$brands=App\Brand::where('publication_status',1)->get()
-									@endphp
-
-									@foreach ($brands as $brand)
-
-									<li><a href="{{ url('product_by_brand',$brand->id) }}"> <span class="pull-right">(50)</span>{{$brand->brand_name}}</a></li>
-											
-									@endforeach
-									
-									
-									
-								
-								</ul>
-							</div>
-						</div><!--/brands_products-->
-						
-						<div class="price-range"><!--price-range-->
-							<h2>Price Range</h2>
-							<div class="well text-center">
-								 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
-								 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
-							</div>
-						</div><!--/price-range-->
-						
-						<div class="shipping text-center"><!--shipping-->
-							<img src="images/home/shipping.jpg" alt="" />
-						</div><!--/shipping-->
-					
-					</div>
-				</div>
+			
+				@yield('side-navigation')
 				
-				<div class="col-sm-9 padding-right">
+				
 
 
 				@yield('content')
 				 
 					
-				</div>
+				
 			
 			</div>
 		</div>
@@ -472,7 +371,9 @@
 	<script src="{{asset('front-end/js/bootstrap.min.js')}}"></script>
 	<script src="{{asset('front-end/js/jquery.scrollUp.min.js')}}"></script>
 	<script src="{{asset('front-end/js/price-range.js')}}"></script>
-    <script src="{{asset('front-end/js/jquery.prettyPhoto.js')}}"></script>
-    <script src="{{asset('front-end/js/main.js')}}"></script>
+  <script src="{{asset('front-end/js/jquery.prettyPhoto.js')}}"></script>
+		<script src="{{asset('front-end/js/main.js')}}"></script>
+  @yield('scripts')
+	
 </body>
 </html>

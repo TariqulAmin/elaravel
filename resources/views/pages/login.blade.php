@@ -1,10 +1,12 @@
-@extends('layout_minus_slider')
+@extends('layout')
 @section('content')
+
+<div class="col-sm-12">
 
 <section id="form mt-5"><!--form-->
   <div class="container">
     <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-5">
         <div class="login-form"><!--login form-->
           @include('error')
           <h2>Login to your account</h2>
@@ -20,7 +22,7 @@
       <div class="col-sm-1">
         <h2 class="or">OR</h2>
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-5">
         <div class="signup-form"><!--sign up form-->
           @include('error')
           <h2>New User Signup!</h2>
@@ -41,5 +43,7 @@
   </div>
 </section><!--/form-->
 
-    
+</div>
+
+
 @endsection

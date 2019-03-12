@@ -1,8 +1,8 @@
-@extends('layout_minus_slider')
+@extends('layout')
 
 @section('content')
 
-
+<div class="col-sm-11">
       <section id="cart_items">
         <div class="container col-sm-12">
           <div class="breadcrumbs">
@@ -112,5 +112,6 @@
         </div>
       </section><!--/#do_action-->
 
+ </div>     
 
 @endsection
