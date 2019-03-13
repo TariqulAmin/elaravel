@@ -123,6 +123,8 @@
             <td class="center">{{$orderDetails->product_name}}</td>
             <td class="center">{{$orderDetails->product_price}}</td>
             <td class="center">{{$orderDetails->product_quantity}}</td>
+            <td class="center">{{$orderDetails->product_price*$orderDetails->product_quantity}}</td>
+
             <td></td>
             
                        
